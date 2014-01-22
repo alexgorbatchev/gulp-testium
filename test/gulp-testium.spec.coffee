@@ -8,6 +8,8 @@ testium = require '../lib/gulp-testium.js'
 expect = chai.expect
 chai.use require 'sinon-chai'
 
+browser = if process.env.TRAVIS then 'firefox' else 'chrome'
+
 describe 'gulp-testium', ->
   it 'passing fixture', (done) ->
     file = path: "#{__dirname}/fixture-passing.coffee", isStream: -> no
@@ -18,7 +20,7 @@ describe 'gulp-testium', ->
 
     """
 
-    stream = testium()
+    stream = testium {browser}
     stream.write file
     stream.end()
     stream.on 'error', (err) ->
@@ -36,7 +38,7 @@ describe 'gulp-testium', ->
 
     """
 
-    stream = testium screenshotDirectory: __dirname
+    stream = testium {browser, screenshotDirectory: __dirname}
     stream.write file
     stream.end()
     stream.on 'error', (err) ->
