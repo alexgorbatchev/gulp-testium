@@ -1,0 +1,3 @@
+describe 'fixture-passing', ->
+  it 'passes', ->
+    # ...
